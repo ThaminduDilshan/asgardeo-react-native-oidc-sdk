@@ -1,6 +1,6 @@
-# [WIP] Asgardeo React Native OIDC SDK & Samples
+# [WIP] Asgardeo React Native OIDC SDK
 
-Repository containing the source of Asgardeo React Native OIDC SDK & Samples.
+Repository containing the source of Asgardeo React Native OIDC SDK & samples.
 
 [![Stackoverflow](https://img.shields.io/badge/Ask%20for%20help%20on-Stackoverflow-orange)](https://stackoverflow.com/questions/tagged/wso2is)
 [![Join the chat at https://join.slack.com/t/wso2is/shared_invite/enQtNzk0MTI1OTg5NjM1LTllODZiMTYzMmY0YzljYjdhZGExZWVkZDUxOWVjZDJkZGIzNTE1NDllYWFhM2MyOGFjMDlkYzJjODJhOWQ4YjE](https://img.shields.io/badge/Join%20us%20on-Slack-%23e01563.svg)](https://join.slack.com/t/wso2is/shared_invite/enQtNzk0MTI1OTg5NjM1LTllODZiMTYzMmY0YzljYjdhZGExZWVkZDUxOWVjZDJkZGIzNTE1NDllYWFhM2MyOGFjMDlkYzJjODJhOWQ4YjE)
@@ -11,30 +11,133 @@ Repository containing the source of Asgardeo React Native OIDC SDK & Samples.
 
 :construction:&ensp;&ensp;This project is a work in progress. Please do not use this yet!
 
-## Table of Contents
+## Table of contents
 
 - [Introduction](#introduction)
-- [Install](#install)
-- [Getting Started](#getting-started)
-- [Try Out the Sample Apps](#try-out-the-sample-apps)
+- [Prerequisite](#prerequisite)
+- [Getting started](#getting-started)
+- [Try out the sample apps](#try-out-the-sample-apps)
 - [APIs](#apis)
 - [Develop](#develop)
   - [Prerequisites](#prerequisites)
-  - [Installing Dependencies](#installing-dependencies)
+  - [Installing dependencies](#installing-dependencies)
 - [Contribute](#contribute)
-  - [Reporting Issues](#reporting-issues)
+  - [Reporting issues](#reporting-issues)
 - [License](#license)
 
 ## Introduction
 
-Asgardeo's OIDC SDK for React Native allows Mobile Applications to use OIDC or OAuth2 authentication in a simple and secure way. By using Asgardeo and the React Native OIDC SDK, Mobile application developers will be able to add identity management to their Mobile Applications with more ease.
+Asgardeo OIDC React Native SDK allows React native mobile applications to use OIDC or OAuth2 authentication in a simple and secure way. By using Asgardeo and the Asgardeo react native OIDC SDK, mobile application developers will be able to add identity management to their mobile applications with more ease.
 
-## Install
+## Prerequisite
 
-Install the library from the npm registry.
+Create an organization in Asgardeo if you don't already have one. The organization name you choose will be referred to as `<org_name>` throughout this document.
+
+## Try out the sample apps
+
+### 1. Create an application in Asgardeo
+
+Before trying out the sample apps, you need to create an application in **Asgardeo**.
+
+1. Navigate to [**Asgardeo console**](https://console.asgardeo.io/login) and click on **Applications** under **Develop** tab.
+
+2. Click **New Application** and then select **Mobile Application**.
+
+3. Enter **Sample** as the name of the app and add the redirect URL(s). You can find the relevant redirect URL(s) of each sample app in the [Running the sample apps](#2-running-the-sample-apps) section.
+
+4. Click **Register** to complete the registration. You will be navigated to management page of the **sample** application.
+
+5. Only the **Code** and **Refresh token** checkboxes should be enabled  under **Allowed grant types**.
+
+6. Click on **Update** at the bottom.
+
+7. Copy the configurations from the Asgardeo react native quickstart guide to your react native application as mentioned in the next section of the guide.
+
+### 2. Configuring the sample apps
+
+1. Download the sample from the given link in the Asgardeo console.
+
+2. Install the required node packages by running the following command at the root directory.
+
+```bash
+npm install
 ```
-npm install --save @asgardeo/auth-react-native
+
+3. Update configuration object in the `Screen/LoginScreen.js` file with your registered app details.
+
+**Note:** You will only have to paste in the `clientID`(**OAuth client key**) generated for the application you registered.
+
+Read more about the SDK configurations [here](#configuration).
+
+```js
+const Config = {
+   clientID: '',
+   serverOrigin: 'https://api.asgardeo.io/t/<org_name>',
+   signInRedirectURL: 'wso2sample://oauth2'
+};
 ```
+
+### 3. Running the sample apps
+
+This application can be run either in an Android emulator or an Android device.
+
+#### Running in an Android emulator
+
+1. Create a suitable Android virtual device using the **Android virtual device manager (AVD Manager)** and launch it.
+
+2. Build and deploy the apps by running the following command at the root directory.
+
+```bash
+react-native run-android
+```
+
+#### Running in an Android device
+
+1. Enable **Debugging over USB** and plug in your device via USB.
+
+2. Build and deploy the apps by running the following command at the root directory.
+
+```bash
+react-native run-android
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+> (Optional) If you're running in a development or debugging mode, start the Metro by running the following command.
+
+```bash
+react-native start
+```
+
+
+
+
+
+
+
+#### React Native Sample Application
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Getting Started
 
@@ -47,32 +150,6 @@ sections listed below.
   - [Running in an Android Emulator](#running-in-an-android-emulator)
   - [Running in an Android Device](#running-in-an-android-device)
 
-### Configuring the Identity Server
-
-1.  Start the WSO2 IS.
-2.  Access WSO2 IS management console from https://localhost:9443/carbon/ and create a service provider.
-    ![Management Console](https://user-images.githubusercontent.com/15249242/91068131-6fc2d380-e651-11ea-9d0a-d58c825bbb68.png)
-    i. Navigate to the `Service Providers` tab listed under the `Identity` section in the management console and click `Add`.<br/>
-    ii. Provide a name for the Service Provider (ex:- sampleRN-app) and click `Register`. Now you will be redirected to the
-    `Edit Service Provider` page.<br/>
-    iii. Expand the `Inbound Authentication Configuration` section and click `Configure` under the `OAuth/OpenID Connect Configuration` section.<br/>
-    iv. Under Allowed `Grant Types` uncheck everything except `Code` and `Refresh Token`.
-    v. Enter Callback URL(s) like as the following values. 
-
-        Callback Url - http://{hostname}:{port}
-        
-       ##### Example (If Run Application using emulator)
-       ```TypeScript
-       Callback Url - http://10.0.2.2:8081
-   
-   vi. Check `Allow authentication without the client secret`.
-   
-   vii. Click `Update` to save.
-   
-3.  Once the service provider is saved, you will be redirected to the `Service Provider Details` page. Here, expand the
-    `Inbound Authentication Configuration` section and click the `OAuth/OpenID Connect Configuration` section. Copy the
-    value of `OAuth Client Key` shown here.
-    ![OAuth Client Credentials](https://user-images.githubusercontent.com/15249242/91567068-27155e00-e962-11ea-8eab-b3bdd790bfd4.png)
 
 ### Configuring the sample
 
