@@ -16,12 +16,7 @@
  * under the License.
  */
 
-import {
-  SignOut,
-  getSignOutURL,
-  refreshAccessToken,
-  getDecodedIDToken,
-} from '@asgardeo/auth-react-native';
+import { auth } from '../index';
 import React, { useState, useEffect, useContext } from 'react';
 import { Linking, Text, View, ActivityIndicator } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -52,9 +47,9 @@ const HomeScreen = (props) => {
 
     setLoading(true);
 
-    refreshAccessToken()
+    auth.refreshAccessToken()
       .then((reftoken) => {
-        getDecodedIDToken().then((decodeID) => {
+        auth.getDecodedIDToken().then((decodeID) => {
           loginContext.setLoginState({ ...loginContext.loginState, ...reftoken, ...decodeID });
           setLoading(false);
         })
@@ -74,7 +69,7 @@ const HomeScreen = (props) => {
    */
   const handleSignOut = async () => {
 
-    const signOutUrl = await getSignOutURL();
+    const signOutUrl = await auth.getSignOutURL();
     Linking.openURL(signOutUrl);
   };
 
@@ -87,14 +82,19 @@ const HomeScreen = (props) => {
 
     if (url.parse(Url.url).query.indexOf("state=sign_out") > -1) {
       setLoading(true);
-      const _signOut = SignOut(Url);
+      const data_list = url.parse(Url.url).query.split('&');
+      const state = data_list[0].split('=')[1];
 
-      if (_signOut === true) {
-        loginContext.setLoginState(initialState)
-        setLoading(false);
-        props.navigation.navigate('LoginScreen');
+      if ( state == "sign_out_success" ) {
+          auth.getDataLayer().removeOIDCProviderMetaData();
+          auth.getDataLayer().removeTemporaryData();
+          auth.getDataLayer().removeSessionData();
+          
+          loginContext.setLoginState(initialState)
+          setLoading(false);
+          props.navigation.navigate('LoginScreen');
       } else {
-        setLoading(false);
+          setLoading(false);
       }
     }
   };

@@ -19,5 +19,14 @@
 import { AppRegistry } from 'react-native';
 import App from './App';
 import { name as appName } from './app.json';
+import { AsgardeoAuthClient } from '@asgardeo/auth-js';
+import { LocalStorage } from './store';
+
+// Instantiate the LocalStore class.
+const store = new LocalStorage();
+
+// Instantiate the AsgardeoAuthClient and pass the store object as an argument into the constructor of 
+// the asgardeo-auth-js sdk.
+export const auth = new AsgardeoAuthClient(store);
 
 AppRegistry.registerComponent(appName, () => App);

@@ -17,14 +17,7 @@
  */
 
 import 'text-encoding-polyfill';
-import {
-  initialize,
-  getAuthorizationURL,
-  requestAccessTokenDetails,
-  userInformation,
-  getDecodedIDToken,
-  getAccessToken
-} from '@asgardeo/auth-react-native';
+import { auth } from '../index';
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Image, Text, Button, Linking, ActivityIndicator } from 'react-native';
 import url from 'url';
@@ -57,7 +50,10 @@ const LoginScreen = (props) => {
    * This hook will initialize the config object and registers the url listener.
    */
   useEffect(() => {
-    initialize(Config);
+    (async function() {
+      await auth.initialize(Config);
+    })();
+    
     Linking.addEventListener('url', handleAuthUrl);
 
     return () => {
@@ -76,17 +72,21 @@ const LoginScreen = (props) => {
       setLoading(true);
 
       // Get param of authorization url and return token details.
-      requestAccessTokenDetails(Url)
+      const urlObject = url.parse(Url.url);
+      const data_list = urlObject.query.split('&');
+      const code = data_list[0].split('=')[1];
+      const session_state = data_list[1].split('=')[1];
+      auth.requestAccessToken(code, session_state)
         .then(async (token) => {
           /**
            * TODO: Remove this waiting once https://github.com/asgardeo/asgardeo-auth-js-sdk/issues/164 is fixed.
            */
-          await getAccessToken();
+          await auth.getAccessToken();
 
           // Obtain the user information.
-          userInformation().then((user) => {
+          auth.getBasicUserInfo().then((user) => {
             // Get the decoded id token fields.
-            getDecodedIDToken().then((decodeID) => {
+            auth.getDecodedIDToken().then((decodeID) => {
               loginContext.setLoginState({ ...loginContext.loginState, ...token, ...user, ...decodeID, 
                 haslogin: true });
               setLoading(false);
@@ -113,7 +113,7 @@ const LoginScreen = (props) => {
   const handleSubmitPress = async () => {
 
     // Authenticate with Identity server.
-    getAuthorizationURL()
+    auth.getAuthorizationURL()
       .then((url) => {
         if (loginContext.loginState.haslogin === false) {
           // Linking the AuthorizeUrl through the internet.
@@ -122,9 +122,9 @@ const LoginScreen = (props) => {
           setLoading(true);
           
           // Obtain the user information.
-          userInformation().then((user) => {
+          auth.getBasicUserInfo().then((user) => {
             // Get the decoded id token fields.
-            getDecodedIDToken().then((decodeID) => {
+            auth.getDecodedIDToken().then((decodeID) => {
               loginContext.setLoginState({ ...loginContext.loginState, ...user, ...decodeID });
               setLoading(false);
               props.navigation.navigate('HomeScreen');
