@@ -19,6 +19,7 @@
 import "text-encoding-polyfill"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AsgardeoAuthClient } from '@asgardeo/auth-js';
+import { CryptoUtils } from "./utils/crypto-utils";
 
 // Create a Store class to store the authentication data. The following implementation uses the async-storage.
 class LocalStorage {
@@ -55,7 +56,8 @@ class LocalStorage {
 
 // Instantiate the LocalStore class.
 const store = new LocalStorage();
+const cryptoUtils = new CryptoUtils();
 
 // Instantiate the AsgardeoAuthClient and pass the store object as an argument into the constructor of 
 // the asgardeo-auth-js sdk.
-export const auth = new AsgardeoAuthClient(store);
+export const auth = new AsgardeoAuthClient(store, cryptoUtils);

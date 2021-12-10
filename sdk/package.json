@@ -24,10 +24,11 @@
   "author": "",
   "bundleDependencies": false,
   "dependencies": {
+    "@asgardeo/auth-js": "file:../asgardeo-auth-js-0.2.18.tgz",
     "@types/crypto-js": "^4.0.1",
     "axios": "^0.21.1",
     "crypto-js": "^3.3.0",
-    "jose": "^3.5.2",
+    "node-jose": "^2.0.0",
     "react": "16.13.1",
     "react-native": "^0.63.4",
     "react-native-gesture-handler": "^1.9.0"
@@ -35,7 +36,6 @@
   "deprecated": false,
   "description": "Asgardeo Auth React Native SDK for Mobile Applications.",
   "devDependencies": {
-    "@asgardeo/auth-js": "^0.2.0",
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
     "@react-native-async-storage/async-storage": "^1.13.2",
