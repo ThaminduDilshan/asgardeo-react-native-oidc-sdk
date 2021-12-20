@@ -1,4 +1,4 @@
-# [WIP] Asgardeo React Native OIDC SDK
+# Asgardeo React Native OIDC SDK
 
 Repository containing the source of Asgardeo React Native OIDC SDK & samples.
 
@@ -8,8 +8,6 @@ Repository containing the source of Asgardeo React Native OIDC SDK & samples.
 [![Twitter](https://img.shields.io/twitter/follow/wso2.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=wso2)
 
 ---
-
-:construction:&ensp;&ensp;This project is a work in progress. Please do not use this yet!
 
 ## Table of contents
 
@@ -43,7 +41,7 @@ Before trying out the sample apps, you need to create an application in **Asgard
 
 2. Click **New Application** and then select **Mobile Application**.
 
-3. Enter **Sample** as the name of the app and add the redirect URL(s). You can find the relevant redirect URL(s) of each sample app in the [Running the sample apps](#2-running-the-sample-apps) section.
+3. Enter **Sample** as the name of the app and add the redirect URL(s). You can find the relevant redirect URL(s) of each sample app in  [Running the sample apps](#2-running-the-sample-apps) section.
 
 4. Click **Register** to complete the registration. You will be navigated to management page of the **sample** application.
 
@@ -63,7 +61,7 @@ Before trying out the sample apps, you need to create an application in **Asgard
 npm install
 ```
 
-3. Update configuration object in the `Screen/LoginScreen.js` file with your registered app details.
+3. Update configuration object in the `screen/LoginScreen.js` file with your registered app details.
 
 **Note:** You will only have to paste in the `clientID`(**OAuth client key**) generated for the application you registered.
 
@@ -79,7 +77,7 @@ const Config = {
 
 ### 3. Running the sample apps
 
-This application can be run either in an Android emulator or an Android device.
+This application can be run either in an emulator or an actual device. Some configurations may differ depending on the OS.
 
 #### Running in an Android emulator
 
@@ -101,23 +99,14 @@ react-native run-android
 react-native run-android
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-> (Optional) If you're running in a development or debugging mode, start the Metro by running the following command.
+> If you're running in a development or debugging mode, start the Metro by running the following command.
 
 ```bash
 react-native start
 ```
+
+
+
 
 
 
