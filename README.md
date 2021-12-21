@@ -27,7 +27,7 @@ Repository containing the source of Asgardeo React Native OIDC SDK & Samples.
 
 ## Introduction
 
-Asgardeo's OIDC SDK for React Native allows Mobile Applications to use OIDC or OAuth2 authentication in a simple and secure way. By using Asgardeo and the React Native OIDC SDK, Mobile application developers will be able to add identity management to their Mobile Applications with more ease.
+Asgardeo's OIDC SDK for React Native allows mobile applications to use OIDC or OAuth2 authentication in a simple and secure way. By using Asgardeo and the React Native OIDC SDK, mobile application developers will be able to add identity management to their mobile applications with more ease.
 
 ## Install
 
@@ -42,148 +42,209 @@ You can experience the capabilities of Asgardeo React-native OIDC SDK by followi
 sections listed below.
 
 - [Configuring the Identity Server](#configuring-the-identity-server)
-- [Configuring the sample](#configuring-the-sample)
-- [Running the sample](#running-the-sample)
+- [Configuring the Sample](#configuring-the-sample)
+- [Running the Sample App](#running-the-sample-app)
   - [Running in an Android Emulator](#running-in-an-android-emulator)
   - [Running in an Android Device](#running-in-an-android-device)
 
 ### Configuring the Identity Server
 
-1.  Start the WSO2 IS.
-2.  Access WSO2 IS management console from https://localhost:9443/carbon/ and create a service provider.
-    ![Management Console](https://user-images.githubusercontent.com/15249242/91068131-6fc2d380-e651-11ea-9d0a-d58c825bbb68.png)
-    i. Navigate to the `Service Providers` tab listed under the `Identity` section in the management console and click `Add`.<br/>
-    ii. Provide a name for the Service Provider (ex:- sampleRN-app) and click `Register`. Now you will be redirected to the
-    `Edit Service Provider` page.<br/>
-    iii. Expand the `Inbound Authentication Configuration` section and click `Configure` under the `OAuth/OpenID Connect Configuration` section.<br/>
-    iv. Under Allowed `Grant Types` uncheck everything except `Code` and `Refresh Token`.
-    v. Enter Callback URL(s) like as the following values. 
+1.  Start the WSO2 Identity server. If you haven't downloaded yet, please visit https://wso2.com/identity-server/ and download the latest version of the Identity server.
 
-        Callback Url - http://{hostname}:{port}
-        
-       ##### Example (If Run Application using emulator)
-       ```TypeScript
-       Callback Url - http://10.0.2.2:8081
-   
-   vi. Check `Allow authentication without the client secret`.
-   
-   vii. Click `Update` to save.
-   
-3.  Once the service provider is saved, you will be redirected to the `Service Provider Details` page. Here, expand the
-    `Inbound Authentication Configuration` section and click the `OAuth/OpenID Connect Configuration` section. Copy the
-    value of `OAuth Client Key` shown here.
+2. Create a service provider/ application in WSO2 IS and configure it following one of the procedures mentioned below.
+
+#### Approach 1
+
+1.  Login to WSO2 IS management console from https://localhost:9443/carbon/ and navigate to the **Service Providers** tab listed under the **Identity** section.
+
+      ![Management Console](https://user-images.githubusercontent.com/15249242/91068131-6fc2d380-e651-11ea-9d0a-d58c825bbb68.png)
+
+2. Click **Add** to add a new service provider.
+
+3. Provide a name for the Service Provider (ex:- sampleRN-app) and click **Register**. Now you will be redirected to the **Edit Service Provider** page.
+
+4. Expand the **Inbound Authentication Configuration** section and click **Configure** under the **OAuth/OpenID Connect Configuration** section.
+
+5. Under Allowed **Grant Types** uncheck everything except `Code` and `Refresh Token`.
+
+6. Enter Callback URL(s) as for the following values.
+
+   Callback Url: `wso2sample://oauth2`
+
+> Alternatively if you're running in an emulator, you can use `http://10.0.2.2:8081` as the callback url.
+
+7. Check **Allow authentication without the client secret**.
+
+8. Click **Add** button to add the OAuth configurations.
+
+9.  Once the configurations are added, you will be redirected to the **Service Provider Details** page. Here, expand the **Inbound Authentication Configuration** section and click on the **OAuth/OpenID Connect Configuration**. Copy the value of `OAuth Client Key` shown here.
+
     ![OAuth Client Credentials](https://user-images.githubusercontent.com/15249242/91567068-27155e00-e962-11ea-8eab-b3bdd790bfd4.png)
 
-### Configuring the sample
+10. Make sure to click the `Update` button to save the changes.
+
+#### Approach 2
+
+Alternatively, you can create a **Custom Application** directly from the Identity server console.
+
+1. Login to WSO2 IS console from https://localhost:9443/console/login and visit **Applications** section.
+
+2. Click on **New Application** button and select the **Custom Application** template.
+
+3. Provide a unique name to identify your application and click **Register** to complete the registration.
+
+4. Go to the **Access** tab and click on **New Protocol** to start adding an authentication protocol.
+
+5. Select **OpenID Connect** from the **Quick Setup** and click on **Next**.
+
+6. Enter the Callback URL(s) as mentioned above and click **Next**.
+
+7. Click **Finish** to save the configurations.
+
+8. Under **Allowed grant type** check `Code` and `Refresh Token`.
+
+9. Check **Public client** to allow the client to authenticate without a client secret.
+
+10. Copy the value of `Client ID`. Make sure to click `Update` button to save the configurations.
+
+### Configuring the Sample
 
 1. Clone/download this project from `https://github.com/asgardeo/asgardeo-react-native-oidc-sdk.git`.
 
-2. Open the cloned project directory via code editors.
+2. Install the dependencies and generate the tar file by running the following command inside the `sdk/` directory.
 
-3. Inside sdk install the dependencies and generate the tar file running `npm pack`
-
-4. Add the relevant configs in LoginScreen file located in `Screen/LoginScreen` folder.
-
-   - Replace the value of `client-id` with the value of `OAuth Client Key` property which you copied in the step 3 when
-     [configuring the Identity Server](#configuring-the-identity-server).
-
-   ```TypeScript
-    const Config = {
-      serverOrigin: 'https://{hostname}:9443',
-      signInRedirectURL: 'http://{hostname}:{port}',
-      clientID: 'ClientID',
-      SignOutURL: "http://{hostname}:{port}"       (Optional)
-    };
+   ```
+   npm pack
    ```
 
-   Example:
+3. Add the relevant configuratons to the **LoginScreen** file located at `sample/screen/LoginScreen` folder.
 
-   ```TypeScript
-    const Config = {
-      serverOrigin: 'https://10.0.2.2:9443',
-      signInRedirectURL: 'http://10.0.2.2:8081',
-      clientID: 'iMc7TiIaIFafkd5hA5xf7kGiAWUa',
-      SignOutURL: "http://10.0.2.2:8081"       (Optional)
-    };
+   - Replace the value of `clientID` with the value of `OAuth Client Key` or `Client ID` which you copied in the previous section of the documentation ([configuring the Identity Server](#configuring-the-identity-server)).
+
+      ```TypeScript
+      const config = {
+         serverOrigin: 'https://{hostname}:9443',
+         signInRedirectURL: 'http://{hostname}:{port}',
+         clientID: 'ClientID',
+         SignOutURL: "http://{hostname}:{port}"  // (Optional)
+      };
+      ```
+
+      Example:
+
+      ```TypeScript
+      const config = {
+         serverOrigin: 'https://10.0.2.2:9443',
+         signInRedirectURL: 'wso2sample://oauth2',
+         clientID: 'iMc7TiIaIFafkd5hA5xf7kGiAWUa',
+         SignOutURL: "http://10.0.2.2:8081"  // (Optional)
+      };
+      ```
+
+4. Install the required dependencies by running the following command inside the `sample/` directory.
+
+   ```
+   npm install
    ```
 
-## Try Out the Sample Apps
+## Running the Sample App
 
-#### Running in an Android Emulator
+This application can be run either in an emulator or an actual device. Some configurations may differ depending on the OS.
 
-1. Create a suitable Android Virtual Device by run `react-native run-android` command in project directory terminal.
+### Android Setup
 
-2. If the WSO2 IS is hosted in the local machine, change the domain of the endpoints in the `Screen/LoginScreen - Config`
-   file to “10.0.2.2”. Refer the documentation on [emulator-networking](https://developer.android.com/studio/run/emulator-networking)
+1. If the WSO2 IS is hosted in the local machine, you have to change the domain of the endpoints defined in `config` object at `screen/LoginScreen` file to `10.0.2.2`. Refer the documentation on [emulator-networking](https://developer.android.com/studio/run/emulator-networking). Next change the hostname of Identity server as `10.0.2.2` in the `<IS_HOME>/repository/conf/deployment.toml` file.
 
-3. By default IS uses a self-signed certificate. If you are using the default pack without
-   changing to a CA signed certificate, follow this [guide](https://developer.android.com/training/articles/security-config) to get rid of SSL issues.
+2. By default IS uses a self-signed certificate. If you ended up in SSL issues and are using the default pack without changing to a CA signed certificate, follow this [guide](https://developer.android.com/training/articles/security-config) to get rid of SSL issues.
 
-4. Change the hostname of IS as 10.0.2.2 in the <IS_HOME>/deployment.toml.<br/>
-   i. Create a new keystore with CN as localhost and SAN as 10.0.2.2
+3. Sometimes you may get `SSLHandshakeException` in android application since WSO2 IS is using a self-signed certificate. To fix this exception, you need to add the public certificate of IS to the sample application.
+
+   i. Create a new keystore with CN as localhost and SAN as `10.0.2.2`.
 
    ```
    keytool -genkey -alias wso2carbon -keyalg RSA -keystore wso2carbon.jks -keysize 2048 -ext SAN=IP:10.0.2.2
    ```
 
-   ii. Export the public certificate ( name it as wso2carbon.pem ) to add into the truststore.
+   ii. Export the public certificate (ex: `wso2carbon.pem`) to add into the truststore.
 
    ```
    keytool -exportcert -alias wso2carbon -keystore wso2carbon.jks -rfc -file wso2carbon.pem
    ```
 
-   iii. Import the certificate in the client-truststore.jks file located in `<IS_HOME>/repository/resources/security/`
+   iii. Import the certificate in the client-truststore.jks file located in `<IS_HOME>/repository/resources/security/`.
 
    ```
    keytool -import -alias wso2is -file wso2carbon.pem -keystore client-truststore.jks -storepass wso2carbon
    ```
 
-   iv. Now copy this public certificate ( wso2carbon.pem ) into the `app/src/main/res/raw` folder.
+   iv. Now copy this public certificate (`wso2carbon.pem`) to the `app/src/main/res/raw` folder.
 
-5. Select the Virtual Device to run the application.
-6. Run the the module `sample` on the selected Virtual Device.
+   v. Create a new file named `network_security_config.xml` in `sample/android/app/src/main/res/xml` folder and copy the below content to it. Make sure to replace `wso2carbon` with the certificate name you added.
+   
+   ```xml
+   <?xml version="1.0" encoding="utf-8"?>
+      <network-security-config>
+         <domain-config cleartextTrafficPermitted="true">
+            <domain includeSubdomains="true">localhost</domain>
+            <domain includeSubdomains="true">10.0.2.2</domain>
+               <trust-anchors>
+                     <certificates src="@raw/wso2carbon"/>
+               </trust-anchors>
+            <domain includeSubdomains="true">192.168.43.29</domain>
+            <base-config cleartextTrafficPermitted="true"/>
+         </domain-config>
+      </network-security-config>
+   ```
+
+   vi. Then add the following config to the `sample/android/app/src/main/AndroidManifest.xml` file under `application` section.
+
+   ```xml
+   android:networkSecurityConfig="@xml/network_security_config"
+   ```
+
+   Now the `AndroidManifest.xml` file should look like below.
+   ```xml
+   <?xml version="1.0" encoding="utf-8"?>
+      <manifest ... >
+         <application
+           android:networkSecurityConfig="@xml/network_security_config"
+           ...
+         >
+            ...
+         </application>
+      </manifest>
+   ```
+
+#### Running in an Android Emulator
+
+1. Create a suitable Android virtual device using the **Android virtual device manager (AVD Manager)** and launch it.
+
+2. Build and deploy the apps by running the following command at the root directory.
+
+   ```bash
+   react-native run-android
+   ```
 
 #### Running in an Android Device
 
-1. Enable USB Debugging in the Developer Options in the Android Device. Refer documentation on
-   [Run your App](https://reactnative.dev/docs/running-on-device).
+1. Enable **Debugging over USB** and plug in your device via USB.
 
-2. If the WSO2 IS is hosted in the local machine, change the domain of the endpoints in the `Screen/LoginScreen - Config` file and the hostnames specified under `hostname` config in the `<IS_HOME>/repository/conf/deployment.toml` file to the IP Address of local machine.
-   Make sure that both the Android Device and the local machine is connected to the same WIFI network.
+2. Build and deploy the apps by running the following command at the root directory.
 
-3. By default IS uses a self-signed certificate. If you are using the default pack without
-   changing to a CA signed certificate, follow this [guide](https://developer.android.com/training/articles/security-config) to get rid of SSL issues.
-
-4. Change the hostname of IS as IP Address in the <IS_HOME>/deployment.toml.<br/>
-   i. Create a new keystore with CN as localhost and SAN as IP Address
-
-   ```
-   keytool -genkey -alias wso2carbon -keyalg RSA -keystore wso2carbon.jks -keysize 2048 -ext SAN=IP:IP Address
+   ```bash
+   react-native run-android
    ```
 
-   ii. Export the public certificate ( name it as wso2carbon.pem ) to add into the truststore.
+> If you're running in a development or debugging mode, start the Metro by running the following command.
 
-   ```
-   keytool -exportcert -alias wso2carbon -keystore wso2carbon.jks -rfc -file wso2carbon.pem
-   ```
-
-   iii. Import the certificate in the client-truststore.jks file located in `<IS_HOME>/repository/resources/security/`
-
-   ```
-   keytool -import -alias wso2is -file wso2carbon.pem -keystore client-truststore.jks -storepass wso2carbon
-   ```
-
-   iv. Now copy this public certificate ( wso2carbon.pem ) into the `app/src/main/res/raw` folder.
-
-5. Connect the Android Device to the machine through a USB cable.
-
-6. Select the Android Device as the Deployment Target.
-
-7. Run the the module `sample` on the selected Android Device.
+```bash
+react-native start
+```
 
 ## APIs
 
-The SDK provides some APIs necessary methods to implement an authentication.
+The SDK provides some APIs necessary to implement an authentication.
+
   - [initialize](#initialize)
   - [getDataLayer](#getdatalayer)
   - [getAuthorizationURL](#getauthorizationurl)
