@@ -1,0 +1,47 @@
+{
+  "name": "asgardeo-react-native-oidc-sdk",
+  "description": "Asgardeo OIDC React Native SDK and Sample App",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "lerna run build --stream",
+    "prebuild": "yarn install && lerna bootstrap",
+    "remove-node-modules": "npx lerna exec -- rimraf -rf node_modules && rimraf -rf node_modules",
+    "remove-package-lock": "npx lerna exec -- rimraf -rf package-lock.json && rimraf -rf package-lock.json",
+    "lint": "lerna run lint",
+    "fix-lint": "lerna run fix-lint",
+    "clean": "lerna run clean --stream",
+    "clean-all": "npm run remove-package-lock && npm run remove-node-modules",
+    "bump-patch-version": "lerna version patch --yes",
+    "bump-minor-version": "lerna version minor --yes",
+    "bump-major-version": "lerna version major --yes"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asgardeo/asgardeo-react-native-oidc-sdk.git"
+  },
+  "keywords": [
+    "Asgardeo",
+    "OIDC",
+    "OAuth2",
+    "Authentication",
+    "Authorization",
+    "React Native"
+  ],
+  "author": "Asgardeo",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/asgardeo/asgardeo-react-native-oidc-sdk/issues"
+  },
+  "homepage": "https://github.com/asgardeo/asgardeo-react-native-oidc-sdk#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "lerna": "^4.0.0",
+    "rimraf": "^3.0.2"
+  },
+  "workspaces": [
+    "lib",
+    "sample"
+  ]
+}
