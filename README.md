@@ -16,8 +16,31 @@ Repository containing the source of Asgardeo React Native OIDC SDK & Samples.
 - [Introduction](#introduction)
 - [Install](#install)
 - [Getting Started](#getting-started)
-- [Try Out the Sample Apps](#try-out-the-sample-apps)
+  - [Configuring the Identity Server](#configuring-the-identity-server)
+  - [Configuring the Sample](#configuring-the-sample)
+  - [Running the Sample App](#running-the-sample-app)
+    - [Running in an Android Emulator](#running-in-an-android-emulator)
+    - [Running in an Android Device](#running-in-an-android-device)
 - [APIs](#apis)
+  - [AuthProvider](#authprovider)
+  - [useAuthContext](#useauthcontext)
+  - [initialize](#initialize)
+  - [getDataLayer](#getdatalayer)
+  - [getAuthorizationURL](#getauthorizationurl)
+  - [signIn](#signin)
+  - [getAccessToken](#getaccesstoken)
+  - [getBasicUserInfo](#getbasicuserinfo)
+  - [getDecodedIDToken](#getdecodedidtoken)
+  - [getIDToken](#getidtoken)
+  - [getOIDCServiceEndpoints](#getoidcserviceendpoints)
+  - [getSignOutUrl](#getsignouturl)
+  - [signOut](#signout)
+  - [revokeAccessToken](#revokeaccesstoken)
+  - [refreshAccessToken](#refreshaccesstoken)
+  - [isAuthenticated](#isauthenticated)
+  - [isSignOutSuccessful](#issignoutsuccessful)
+  - [requestCustomGrant](#requestcustomgrant)
+  - [updateConfig](#updateconfig)
 - [Develop](#develop)
   - [Prerequisites](#prerequisites)
   - [Installing Dependencies](#installing-dependencies)
@@ -85,7 +108,7 @@ sections listed below.
 
 #### Approach 2
 
-Alternatively, you can create a **Custom Application** directly from the Identity server console.
+Alternatively, you can create a **Custom Application** directly from the Identity Server Console.
 
 1. Login to WSO2 IS console from https://localhost:9443/console/login and visit **Applications** section.
 
@@ -321,12 +344,12 @@ const _dataLayer = await getDataLayer();
 ### getAuthorizationURL
 
 ```TypeScript
-getAuthorizationURL: (config: GetAuthURLConfig) => Promise<string>;
+getAuthorizationURL: (config?: GetAuthURLConfig) => Promise<string>;
 ```
 
 #### Arguments
 
-1. config: [`GetAuthURLConfig`](https://github.com/asgardeo/asgardeo-auth-js-sdk#getauthurlconfig) Config object that has the necessary attributes to configure this method. The `forceInit` attribute can be set to `true` to trigger a request to the `.well-known` endpoint and obtain the OIDC endpoints. By default, a request to the `.well-known` endpoint will be sent only if a request to it had not been sent before. If you wish to force a request to the endpoint, you can use this attribute.
+1. config: [`GetAuthURLConfig`](https://github.com/asgardeo/asgardeo-auth-js-sdk#getauthurlconfig) (optional) Config object that has the necessary attributes to configure this method. The `forceInit` attribute can be set to `true` to trigger a request to the `.well-known` endpoint and obtain the OIDC endpoints. By default, a request to the `.well-known` endpoint will be sent only if a request to it had not been sent before. If you wish to force a request to the endpoint, you can use this attribute.
 
    The object can only contain key-value pairs that you wish to append as path parameters to the authorization URL. For example, to set the `fidp` parameter, you can insert `fidp` as a key and its value to this object.
 
@@ -604,7 +627,7 @@ const isAuth = await isAuthenticated();
 ### isSignOutSuccessful
 
 ```TypeScript
-
+isSignOutSuccessful: (signOutRedirectURL: string) => boolean;
 ```
 
 #### Arguments
@@ -626,7 +649,7 @@ const hasSignOut = isSignOutSuccessful("signOutRedirectURL");
 ### requestCustomGrant
 
 ```TypeScript
-
+requestCustomGrant: (config: CustomGrantConfig) => Promise<any>;
 ```
 
 #### Arguments
@@ -656,7 +679,7 @@ requestCustomGrant(config).then((response) => {
 ### updateConfig
 
 ```TypeScript
-
+updateConfig: (config: Partial<AuthClientConfig>) => Promise<void>;
 ```
 
 #### Arguments
