@@ -134,13 +134,7 @@ Alternatively, you can create a **Custom Application** directly from the Identit
 
 1. Clone/download this project from `https://github.com/asgardeo/asgardeo-react-native-oidc-sdk.git`.
 
-2. Install the dependencies and generate the tar file by running the following command inside the `lib/` directory.
-
-   ```
-   npm pack
-   ```
-
-3. Add the relevant configuratons to the **LoginScreen** file located at `sample/screen/LoginScreen` folder.
+2. Add the relevant configuratons to the **LoginScreen** file located at `sample/screen/LoginScreen` folder.
 
    - Replace the value of `clientID` with the value of `OAuth Client Key` or `Client ID` which you copied in the previous section of the documentation ([configuring the Identity Server](#configuring-the-identity-server)).
 
@@ -164,10 +158,10 @@ Alternatively, you can create a **Custom Application** directly from the Identit
       };
       ```
 
-4. Install the required dependencies by running the following command inside the `sample/` directory.
+3. Install the required dependencies by running the following command inside the root directory.
 
    ```
-   npm install
+   yarn build
    ```
 
 ## Running the Sample App
