@@ -3,6 +3,9 @@
   "description": "Asgardeo Auth React Native SDK for Mobile Applications.",
   "main": "index.ts",
   "scripts": {
+    "build": "rimraf dist && npm run type-check",
+    "build:dev": "rimraf dist && npm run type-check",
+    "type-check": "tsc --emitDeclarationOnly",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
@@ -55,7 +58,8 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "metro-react-native-babel-preset": "^0.65.1",
     "react-test-renderer": "16.13.1",
+    "rimraf": "^3.0.2",
     "text-encoding-polyfill": "^0.6.7",
-    "typescript": "^4.1.2"
+    "typescript": "^4.5.4"
   }
 }
